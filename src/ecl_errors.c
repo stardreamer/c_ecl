@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include "ecl_errors.h"
+
 
 /*! \fn const char* errorString(int error_code)
  *  \brief Return string representation of the \a error_code
@@ -13,6 +15,8 @@ const char* error_string(int error_code)
             return OK_STR;
         case FILE_NOT_FOUND:
             return FILE_NOT_FOUND_STR;
+        case NOT_IMPLEMENTED:
+            return NOT_IMPLEMENTED_STR;
 		default:
 			return UNKNOWN_ERROR;
 		break;
