@@ -1,0 +1,16 @@
+---
+:source:
+  :path: test
+  :file: test_calc.c
+:successes: []
+:failures:
+- :test: test_add
+  :line: 13
+  :message: Expected 4 Was 0
+:ignores: []
+:counts:
+  :total: 1
+  :passed: 0
+  :failed: 1
+  :ignored: 0
+:stdout: []
