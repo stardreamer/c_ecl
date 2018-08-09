@@ -7,7 +7,7 @@
 
 #define OK_STR "No Error!"
 #define FILE_NOT_FOUND_STR "File not found!"
-#define NOT_IMPLEMENTED_STR "This functionality was not yet developed!"
+#define NOT_IMPLEMENTED_STR "This functionality has not yet developed!"
 #define UNKNOWN_ERROR "Unknown error occured!"
 
 /*! \fn const char* error_string(int error_code)
