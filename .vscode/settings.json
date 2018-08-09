@@ -3,6 +3,8 @@
         "system_error": "cpp",
         "thread": "cpp",
         "cerrno": "cpp",
-        "unity.h": "c"
+        "unity.h": "c",
+        "array": "cpp",
+        "string_view": "cpp"
     }
 }
