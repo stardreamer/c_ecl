@@ -3,16 +3,12 @@
 
 #define OK 0
 #define FILE_NOT_FOUND -1
+#define NOT_IMPLEMENTED -2
 
 #define OK_STR "No Error!"
 #define FILE_NOT_FOUND_STR "File not found!"
+#define NOT_IMPLEMENTED_STR "This functionality was not yet developed!"
 #define UNKNOWN_ERROR "Unknown error occured!"
-
-/*! \var int error_code
-    \brief Contains the last error code.
-    \warning Not thread safe!
-*/
-extern int error_code;
 
 /*! \fn const char* error_string(int error_code)
  *  \brief Return string representation of the \a error_code
