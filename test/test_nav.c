@@ -17,5 +17,5 @@ void test_smoke_nav( void )
     int error_code = get_file_descriptor(NULL, NULL);
 
     sprintf(message, "Smoke test for get_file_descriptor has failed! Expected: (%s) but was (%s)", error_string(OK), error_string(error_code));
-    TEST_ASSERT_MESSAGE(error_code > 0, message);
+    TEST_ASSERT_MESSAGE(error_code == OK, message);
 }
