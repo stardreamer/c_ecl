@@ -6,7 +6,7 @@ OBJDIR := obj
 BINDIR := bin
 
 CC := gcc
-FLAGS := -Wall -pedantic -ffreestanding -Wstrict-overflow=4 -Wformat-security -Wextra -Wfloat-equal -Wundef -Wshadow -O2  -c -std=c99 -MD
+FLAGS := -Wall -pedantic -ffreestanding -Wstrict-overflow=4 -Wformat-security -Wextra -Wfloat-equal -Wundef -Wshadow -O2  -c -std=c99 -MD -D_FILE_OFFSET_BITS=64
 BINDIR_REL := $(addprefix ../, $(BINDIR))
 
 SRCDIR_REL := $(addprefix ../, $(SRCDIR))
