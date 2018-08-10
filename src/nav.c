@@ -1,8 +1,8 @@
-#include "nav.h"
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "nav.h"
 
 int get_file_descriptor(char* filepath, int* descriptor)
 {
@@ -19,5 +19,6 @@ int get_file_descriptor(char* filepath, int* descriptor)
     }
     
     *descriptor = fd;
+    
     return OK;
 }
