@@ -17,6 +17,8 @@ const char* error_string(int error_code)
             return FILE_NOT_FOUND_STR;
         case FILE_CANT_BE_OPENED:
             return FILE_CANT_BE_OPENED_STR;
+        case FILE_CANT_BE_CLOSED:
+            return FILE_CANT_BE_CLOSED_STR;
         case NOT_IMPLEMENTED:
             return NOT_IMPLEMENTED_STR;
 		default:
