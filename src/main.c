@@ -40,6 +40,23 @@ void main(int argc, char **argv)
         gettimeofday(&after , NULL);
         printf("Total elapsed time: %lf s\n", time_diff(before , after)/1e6);
         printf("%d\n", arre.length);
+        off_t b_read = 0;
+        double time_spent = 0;
+        for(int i=0;i<arre.length;i++)
+        {
+            print_header(arre.headers[i]);
+            struct timeval start_read, end_read;
+            char* data;
+            gettimeofday(&start_read , NULL);
+            get_data_by_layout(descriptor, arre.headers[i].layout, &data);
+            gettimeofday(&end_read , NULL);
+            time_spent += time_diff(start_read , end_read)/1e6;
+            b_read += arre.headers[i].layout.elements_number * arre.headers[i].layout.type_size;
+            free(data);
+        }
+
+        printf("Average data read speed: %lf MB/s\n",  b_read/(time_spent*1024*1024));
+        
     }
 
 }

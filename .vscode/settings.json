@@ -18,6 +18,7 @@
         "utils.h": "c",
         "stdlib.h": "c",
         "time.h": "c",
-        "initializer_list": "c"
+        "initializer_list": "c",
+        "typeinfo": "c"
     }
 }

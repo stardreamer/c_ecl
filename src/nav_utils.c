@@ -78,7 +78,7 @@ int skip_chunk(int descriptor, off_t* end_position)
 
 int print_header(Header header)
 {
-    printf("%s|%d|%s|%ld|%ld\n", header.keyword, header.elements_number, header.type, header.start_data_pos, header.end_data_pos);
+    printf("%s|%d|%s|%u|%ld|%ld\n", header.keyword, header.layout.elements_number, header.type,header.layout.type_size, header.layout.start_pos, header.layout.end_pos);
     return OK;
 }
 

@@ -35,9 +35,9 @@ int get_headers(int descriptor, HeaderArray* header_array)
         if(cur_position == end_position)
             break;
         int chunks_skipped;
-        header_array->headers[header_array->length-1].start_data_pos = cur_position;
-        skip_data_bytes(descriptor, header.elements_number*type_to_size(header.type), &chunks_skipped, &cur_position);
-        header_array->headers[header_array->length-1].end_data_pos = cur_position;
+        header_array->headers[header_array->length-1].layout.start_pos = cur_position;
+        skip_data_bytes(descriptor, header.layout.elements_number*type_to_size(header.type), &chunks_skipped, &cur_position);
+        header_array->headers[header_array->length-1].layout.end_pos = cur_position;
 
     }
 
@@ -51,18 +51,42 @@ int get_headers(int descriptor, HeaderArray* header_array)
 
 int read_header(int descriptor, Header* header, off_t* cur_position)
 {
-
+    DataLayout layout = DATA_LAYOUT_INIT;
+    header->layout = layout;
     lseek(descriptor, 4, SEEK_CUR);
     header->keyword = (char*) malloc(9);
     read(descriptor, header->keyword, 8);
     header->keyword[8] = '\0';
     char element_number_bytes[4];
     read(descriptor, element_number_bytes, 4);
-    header->elements_number = reverse_int(element_number_bytes);
+    header->layout.elements_number = reverse_int(element_number_bytes);
     header->type = (char*) malloc(5);
     read(descriptor, header->type, 4);
     header->type[4] = '\0';
+    header->layout.type_size = type_to_size(header->type);
     *cur_position = lseek(descriptor, 4, SEEK_CUR);
     return OK;
 }
 
+int get_data_by_layout(int descriptor, DataLayout layout, char** byte_array)
+{
+    off_t cur_pos = lseek(descriptor, layout.start_pos, SEEK_SET);
+    int error_code = safe_malloc(layout.elements_number*layout.type_size, (void**)byte_array);
+    if(error_code != OK)
+        return MALLOC_FAILURE;
+    int cur_arr_pos = 0;
+    while(cur_pos != layout.end_pos)
+    {
+        char next_pos_bytes[4];
+
+        read(descriptor, next_pos_bytes, 4);
+
+        int next_bytes_num = reverse_int(next_pos_bytes);
+
+        read(descriptor, *byte_array + cur_arr_pos, next_bytes_num);
+        cur_arr_pos+=next_bytes_num;
+        cur_pos = lseek(descriptor, 4, SEEK_CUR);
+    }
+
+    return OK;
+}

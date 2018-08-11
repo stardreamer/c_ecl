@@ -6,17 +6,25 @@
 #include "utils.h"
 
 #define HEADER_ARRAY_INIT {0, 256, NULL}
+#define DATA_LAYOUT_INIT {0, 0, 0, 0}
 
-typedef struct Header { 
-    off_t start_data_pos; 
-    off_t end_data_pos;
+typedef struct DataLayout 
+{
+    off_t start_pos; 
+    off_t end_pos;
+    unsigned int elements_number;
+    unsigned int type_size;
+} DataLayout;
+
+typedef struct Header 
+{ 
     char* keyword; 
     char* type;
-    unsigned int elements_number;
-
+    DataLayout layout;
 } Header;
 
-typedef struct HeaderArray{
+typedef struct HeaderArray
+{
     int length; 
     int capacity;
 	Header* headers; 
@@ -50,5 +58,7 @@ int get_headers(int descriptor, HeaderArray* header_array);
 int read_header(int descriptor, Header* header, off_t* cur_position);
 
 int skip_data_bytes(int descriptor, off_t total_bytes, int* skipped_chunks, off_t* cur_position);
+
+int get_data_by_layout(int descriptor, DataLayout layout, char** byte_array);
 
 #endif
