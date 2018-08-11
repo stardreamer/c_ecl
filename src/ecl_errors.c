@@ -21,6 +21,10 @@ const char* error_string(int error_code)
             return FILE_CANT_BE_CLOSED_STR;
         case NOT_IMPLEMENTED:
             return NOT_IMPLEMENTED_STR;
+        case MALLOC_FAILURE:
+            return MALLOC_FAILURE_STR;
+        case REALLOC_FAILURE:
+            return REALLOC_FAILURE_STR;
 		default:
 			return UNKNOWN_ERROR;
 		break;
