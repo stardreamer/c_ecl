@@ -5,6 +5,19 @@
         "cerrno": "cpp",
         "unity.h": "c",
         "array": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "chrono": "c",
+        "functional": "c",
+        "istream": "c",
+        "ostream": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "ecl_errors.h": "c",
+        "utils.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c",
+        "initializer_list": "c"
     }
 }

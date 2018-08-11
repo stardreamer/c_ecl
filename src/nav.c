@@ -1,44 +1,68 @@
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "nav.h"
+#include "memory_utils.h"
 
-/*! \fn int get_file_descriptor(char* filepath, int* descriptor)
- *  \brief Gets the file \a descriptor.
- *  \param filepath an pointer to char array.
- *  \param descriptor an pointer to descriptor.
- *  \return error code.
- */
-int get_file_descriptor(char* filepath, int* descriptor)
+int get_headers(int descriptor, HeaderArray* header_array)
 {
-    if(access(filepath, F_OK) == -1)
-    {
-        return FILE_NOT_FOUND;
+    HeaderArray har = HEADER_ARRAY_INIT;
+    *header_array = har;
+    off_t end_position = lseek(descriptor, 0, SEEK_END);
+    lseek(descriptor, 0, SEEK_SET);
+
+    int err_code = safe_malloc(header_array->capacity*sizeof(Header), (void**)&(header_array->headers));
+    if(err_code != 0)
+        return err_code;
+
+    Header header;
+    off_t cur_position = lseek(descriptor, 0, SEEK_CUR);
+ 
+    while(cur_position != end_position)
+    {        
+        read_header(descriptor, &header, &cur_position);
+
+        if(header_array->length == header_array->capacity - 1)
+        {
+            header_array->capacity *= 2;
+            err_code = safe_realloc(header_array->capacity*sizeof(Header), (void**)&(header_array->headers));
+            if(err_code != 0)
+                return err_code;
+        }
+        
+        header_array->headers[header_array->length] = header;
+        header_array->length += 1;
+        if(cur_position == end_position)
+            break;
+        int chunks_skipped;
+        header_array->headers[header_array->length-1].start_data_pos = cur_position;
+        skip_data_bytes(descriptor, header.elements_number*type_to_size(header.type), &chunks_skipped, &cur_position);
+        header_array->headers[header_array->length-1].end_data_pos = cur_position;
+
     }
 
-    int fd = open(filepath, O_RDONLY);
-
-    if(fd == -1)
-    {
-        return FILE_CANT_BE_OPENED;
-    }
-    
-    *descriptor = fd;
+    err_code = safe_realloc(header_array->length*sizeof(Header), (void**)&(header_array->headers));
+    if(err_code != 0)
+        return err_code;
+    header_array->capacity = header_array ->length;
 
     return OK;
 }
 
-/*! \fn int close_file_descriptor(int descriptor)
- *  \brief Closes the file \a descriptor.
- *  \param descriptor descriptor to be closed.
- *  \return error code.
- */
-int close_file_descriptor(int descriptor)
+int read_header(int descriptor, Header* header, off_t* cur_position)
 {
-    if (close(descriptor) == -1) {
-        return FILE_CANT_BE_CLOSED;
-    }
 
+    lseek(descriptor, 4, SEEK_CUR);
+    header->keyword = (char*) malloc(9);
+    read(descriptor, header->keyword, 8);
+    header->keyword[8] = '\0';
+    char element_number_bytes[4];
+    read(descriptor, element_number_bytes, 4);
+    header->elements_number = reverse_int(element_number_bytes);
+    header->type = (char*) malloc(5);
+    read(descriptor, header->type, 4);
+    header->type[4] = '\0';
+    *cur_position = lseek(descriptor, 4, SEEK_CUR);
     return OK;
 }
+

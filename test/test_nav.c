@@ -50,3 +50,19 @@ void test_should_return_filecantbeclosed_on_bad_descriptor()
     sprintf(message, "Unit test for close_file_descriptor has failed! Expected: (%s) but was (%s)", error_string(FILE_CANT_BE_CLOSED), error_string(error_code));
     TEST_ASSERT_MESSAGE(error_code == FILE_CANT_BE_CLOSED, message);
 }
+
+void test_read_header()
+{
+    char message[1024];
+    int descriptor;
+    get_file_descriptor("test/data/example.egrid", &descriptor);
+
+    HeaderArray arre;
+    
+    get_headers(descriptor, &arre);
+
+    print_header(arre.headers[0]);
+
+    int error_code = close_file_descriptor(descriptor);
+
+}
