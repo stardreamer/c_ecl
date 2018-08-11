@@ -91,7 +91,15 @@ unsigned int type_to_size(char* type)
     if(type[0] == 'L' || type[0] == 'l')
         return 4;
     if(type[0] == 'C' || type[0] == 'c')
+    {
+        if(type[1] == '0')
+        {
+            return 10*(type[2]-'0') + (type[3] - '0');
+        }
+
         return 8;
+    }
+        
     if(type[0] == 'D' || type[0] == 'd')
         return 8;
     if(type[0] == 'M' || type[0] == 'm')
