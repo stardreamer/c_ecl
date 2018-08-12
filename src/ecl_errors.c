@@ -25,6 +25,8 @@ const char* error_string(int error_code)
             return MALLOC_FAILURE_STR;
         case REALLOC_FAILURE:
             return REALLOC_FAILURE_STR;
+        case DATA_END:
+            return DATA_END_STR;
 		default:
 			return UNKNOWN_ERROR;
 		break;
