@@ -51,7 +51,7 @@ int reverse_int(char *c)
 unsigned char reverse_logi(char *c) 
 {
     int i = reverse_int(c);
-    return i == 0;
+    return i != 0;
 }
 
 float reverse_float(char *c) 
@@ -120,7 +120,7 @@ void byte_reverse_in_place(char *byte_stream, int len)
     {
         char tmp1 = byte_stream[0];
         char tmp2 = byte_stream[1];
-        
+
         byte_stream[0] = byte_stream[3];
         byte_stream[3] = tmp1;
         byte_stream[1] = byte_stream[2];
