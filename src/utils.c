@@ -107,3 +107,20 @@ float reverse_double(char *c)
 
     return d;
 }
+
+void byte_reverse_in_place(char *byte_stream, int len)
+{
+    if (is_bigendian())
+    {
+        return;
+    }
+
+    char *p1 = byte_stream;
+    char *p2 = byte_stream + len - 1;
+
+    while (p1 < p2) {
+        char tmp = *p1;
+        *p1++ = *p2;
+        *p2-- = tmp;
+    }
+}

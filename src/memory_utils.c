@@ -18,3 +18,4 @@ int safe_realloc(size_t new_size, void** a_p)
     *a_p = tmp;
     return OK;
 }
+

@@ -11,4 +11,6 @@ float reverse_float (char *c);
 
 float reverse_double (char *c);
 
+void byte_reverse_in_place(char *byte_stream, int len);
+
 #endif
