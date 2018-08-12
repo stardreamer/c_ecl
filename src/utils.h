@@ -13,13 +13,14 @@ float reverse_float (char *c);
 
 float reverse_double (char *c);
 
-void byte_reverse_in_place(char *byte_stream, int len);
+void byte_reverse_in_place(char *byte_stream, int len, char i_be);
+
+void data_byte_reverse_in_place_w_size(char* byte_stream, unsigned int data_size, int type_size);
+
+inline void always_byte_reverse_in_place(char* byte_stream, int len);
 
 
-inline void always_byte_reverse_in_place(char *byte_stream, int len);
-
-
-inline void always_byte_reverse_in_place(char *byte_stream, int len)
+inline void always_byte_reverse_in_place(char* byte_stream, int len)
 {
     if(len == 4)
     {

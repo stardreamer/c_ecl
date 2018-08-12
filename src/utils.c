@@ -108,12 +108,22 @@ float reverse_double(char *c)
     return d;
 }
 
-void byte_reverse_in_place(char *byte_stream, int len)
+void byte_reverse_in_place(char* byte_stream, int len, char i_b_e)
 {
-    if (is_bigendian())
+    if (i_b_e)
     {
         return;
     }
 
     always_byte_reverse_in_place(byte_stream, len);
+}
+
+void data_byte_reverse_in_place_w_size(char* byte_stream, unsigned int data_size, int type_size)
+{
+    char i_b_e = is_bigendian();
+
+    for(unsigned int i=0; i<data_size; i+=type_size)
+    {
+        byte_reverse_in_place(byte_stream+i, type_size, i_b_e);
+    } 
 }

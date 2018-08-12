@@ -107,10 +107,7 @@ int read_data_by_header_w_endianess(int descriptor, Header header, char** byte_a
         return OK;
     }
 
-    for(int i=0; i<data_size; i+=header.layout.type_size)
-    {
-        byte_reverse_in_place(*byte_array+i, header.layout.type_size);
-    }
+    data_byte_reverse_in_place_w_size(*byte_array, data_size, header.layout.type_size);
 
     return OK;
 }
