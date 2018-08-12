@@ -110,11 +110,6 @@ unsigned int type_to_size(char* type)
 
 int read_data_chunk(int descriptor, DataLayout layout, char** chunk_byte_array)
 {
-    int error_code = safe_malloc(layout.elements_number*layout.type_size, (void**)chunk_byte_array);
-    if(error_code != OK)
-        return MALLOC_FAILURE;
-    
-    
     off_t cur_pos = lseek(descriptor, 0, SEEK_CUR);
 
     if(cur_pos == layout.end_pos)
@@ -126,7 +121,13 @@ int read_data_chunk(int descriptor, DataLayout layout, char** chunk_byte_array)
     read(descriptor, next_pos_bytes, 4);
     int next_bytes_num = reverse_int(next_pos_bytes);
 
+    int error_code = safe_malloc(next_bytes_num, (void**)chunk_byte_array);
+    if(error_code != OK)
+        return MALLOC_FAILURE;
+
     read(descriptor, *chunk_byte_array, next_bytes_num);
+
+    lseek(descriptor, 4, SEEK_CUR);
 
     return OK;
 }

@@ -68,7 +68,7 @@ int read_header(int descriptor, Header* header, off_t* cur_position)
     return OK;
 }
 
-int get_data_by_layout(int descriptor, DataLayout layout, char** byte_array)
+int read_data_by_layout(int descriptor, DataLayout layout, char** byte_array)
 {
     off_t cur_pos = lseek(descriptor, layout.start_pos, SEEK_SET);
     int error_code = safe_malloc(layout.elements_number*layout.type_size, (void**)byte_array);

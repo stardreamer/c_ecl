@@ -59,6 +59,7 @@ int read_header(int descriptor, Header* header, off_t* cur_position);
 
 int skip_data_bytes(int descriptor, off_t total_bytes, int* skipped_chunks, off_t* cur_position);
 
-int get_data_by_layout(int descriptor, DataLayout layout, char** byte_array);
+int read_data_by_layout(int descriptor, DataLayout layout, char** byte_array);
 
+int read_data_chunk(int descriptor, DataLayout layout, char** chunk_byte_array);
 #endif
