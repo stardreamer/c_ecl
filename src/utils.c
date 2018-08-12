@@ -114,7 +114,7 @@ void byte_reverse_in_place(char *byte_stream, int len)
     {
         return;
     }
-
+    
     char *p1 = byte_stream;
     char *p2 = byte_stream + len - 1;
 

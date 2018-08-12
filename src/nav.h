@@ -62,4 +62,7 @@ int skip_data_bytes(int descriptor, off_t total_bytes, int* skipped_chunks, off_
 int read_data_by_layout(int descriptor, DataLayout layout, char** byte_array);
 
 int read_data_chunk(int descriptor, DataLayout layout, char** chunk_byte_array);
+
+int read_data_by_header_w_endianess(int descriptor, Header header, char** byte_array);
+
 #endif
